@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人主页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-top: 50px;
+            margin-bottom: 50px;
+            border-radius: 8px;
+        }
+        
+        header {
+            text-align: center;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2em;
+        }
+        
+        .about {
+            padding: 30px 0;
+        }
+        
+        h2 {
+            color: #2980b9;
+            margin-bottom: 20px;
+        }
+        
+        .skills {
+            padding: 30px 0;
+            border-top: 1px solid #eee;
+        }
+        
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .skill-item {
+            background-color: #3498db;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+        
+        .contact {
+            padding: 30px 0;
+            border-top: 1px solid #eee;
+        }
+        
+        .contact-info {
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .contact-item {
+            margin-bottom: 10px;
+        }
+        
+        .contact-item strong {
+            display: inline-block;
+            width: 100px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>个人主页</h1>
+            <p class="subtitle">欢迎访问我的个人网站</p>
+        </header>
+        
+        <section class="about">
+            <h2>关于我</h2>
+            <p>这是一个使用GitHub Pages部署的个人网页。我是一名技术爱好者，喜欢探索各种技术领域，包括移动开发、Web开发等。</p>
+            <p>本网站展示了我的基本信息、技能和联系方式，希望能与更多志同道合的朋友交流学习。</p>
+        </section>
+        
+        <section class="skills">
+            <h2>技能</h2>
+            <div class="skill-list">
+                <span class="skill-item">Android开发</span>
+                <span class="skill-item">Web开发</span>
+                <span class="skill-item">Java</span>
+                <span class="skill-item">JavaScript</span>
+                <span class="skill-item">HTML/CSS</span>
+                <span class="skill-item">Git</span>
+            </div>
+        </section>
+        
+        <section class="contact">
+            <h2>联系方式</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <strong>邮箱：</strong>
+                    <span>example@example.com</span>
+                </div>
+                <div class="contact-item">
+                    <strong>GitHub：</strong>
+                    <span>https://github.com/username</span>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>&copy; 2026 个人主页. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
