@@ -1,18 +1,94 @@
-// 粒子特效（花瓣效果）
+// 粒子特效（四季变化效果）
 class Particle {
     constructor() {
+        this.season = this.getCurrentSeason();
         this.x = Math.random() * window.innerWidth;
         this.y = -10;
-        this.size = Math.random() * 10 + 5;
-        this.speedX = Math.random() * 2 - 1;
-        this.speedY = Math.random() * 3 + 1;
+        this.size = this.getRandomSize();
+        this.speedX = this.getRandomSpeedX();
+        this.speedY = this.getRandomSpeedY();
         this.color = this.getRandomColor();
         this.opacity = Math.random() * 0.8 + 0.2;
     }
     
+    // 获取当前季节
+    getCurrentSeason() {
+        const month = new Date().getMonth() + 1;
+        if (month >= 3 && month <= 5) {
+            return 'spring'; // 春天
+        } else if (month >= 6 && month <= 8) {
+            return 'summer'; // 夏天
+        } else if (month >= 9 && month <= 11) {
+            return 'autumn'; // 秋天
+        } else {
+            return 'winter'; // 冬天
+        }
+    }
+    
+    // 根据季节获取随机大小
+    getRandomSize() {
+        switch (this.season) {
+            case 'winter': // 雪花
+                return Math.random() * 6 + 3;
+            case 'spring': // 花瓣
+                return Math.random() * 8 + 4;
+            case 'summer': // 雨滴
+                return Math.random() * 4 + 2;
+            case 'autumn': // 树叶
+                return Math.random() * 10 + 5;
+            default:
+                return Math.random() * 8 + 4;
+        }
+    }
+    
+    // 根据季节获取随机X速度
+    getRandomSpeedX() {
+        switch (this.season) {
+            case 'winter': // 雪花飘落较慢
+                return Math.random() * 1.5 - 0.75;
+            case 'spring': // 花瓣飘落适中
+                return Math.random() * 2 - 1;
+            case 'summer': // 雨滴飘落较快
+                return Math.random() * 1 - 0.5;
+            case 'autumn': // 树叶飘落较慢
+                return Math.random() * 2.5 - 1.25;
+            default:
+                return Math.random() * 2 - 1;
+        }
+    }
+    
+    // 根据季节获取随机Y速度
+    getRandomSpeedY() {
+        switch (this.season) {
+            case 'winter': // 雪花飘落较慢
+                return Math.random() * 2 + 0.5;
+            case 'spring': // 花瓣飘落适中
+                return Math.random() * 2.5 + 1;
+            case 'summer': // 雨滴飘落较快
+                return Math.random() * 4 + 2;
+            case 'autumn': // 树叶飘落适中
+                return Math.random() * 3 + 1.5;
+            default:
+                return Math.random() * 2.5 + 1;
+        }
+    }
+    
+    // 根据季节获取随机颜色
     getRandomColor() {
-        const colors = ['#ff9ff3', '#feca57', '#ff6b6b', '#48dbfb', '#1dd1a1'];
-        return colors[Math.floor(Math.random() * colors.length)];
+        switch (this.season) {
+            case 'winter': // 雪花
+                return '#ffffff';
+            case 'spring': // 花瓣
+                const springColors = ['#ff9ff3', '#feca57', '#ff6b6b', '#48dbfb', '#1dd1a1'];
+                return springColors[Math.floor(Math.random() * springColors.length)];
+            case 'summer': // 雨滴
+                return '#48dbfb';
+            case 'autumn': // 树叶
+                const autumnColors = ['#ff6b6b', '#feca57', '#ff9ff3', '#a29bfe'];
+                return autumnColors[Math.floor(Math.random() * autumnColors.length)];
+            default:
+                return '#ff9ff3';
+        }
     }
     
     update() {
@@ -28,10 +104,53 @@ class Particle {
         ctx.save();
         ctx.globalAlpha = this.opacity;
         ctx.fillStyle = this.color;
+        
+        switch (this.season) {
+            case 'winter': // 雪花
+                this.drawSnowflake(ctx);
+                break;
+            case 'spring': // 花瓣
+                this.drawPetal(ctx);
+                break;
+            case 'summer': // 雨滴
+                this.drawRaindrop(ctx);
+                break;
+            case 'autumn': // 树叶
+                this.drawLeaf(ctx);
+                break;
+            default:
+                this.drawPetal(ctx);
+        }
+        
+        ctx.restore();
+    }
+    
+    // 绘制雪花
+    drawSnowflake(ctx) {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
-        ctx.restore();
+    }
+    
+    // 绘制花瓣
+    drawPetal(ctx) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+    }
+    
+    // 绘制雨滴
+    drawRaindrop(ctx) {
+        ctx.beginPath();
+        ctx.ellipse(this.x, this.y, this.size * 0.5, this.size * 1.5, Math.PI / 4, 0, Math.PI * 2);
+        ctx.fill();
+    }
+    
+    // 绘制树叶
+    drawLeaf(ctx) {
+        ctx.beginPath();
+        ctx.ellipse(this.x, this.y, this.size * 0.6, this.size * 1.2, Math.PI / 4, 0, Math.PI * 2);
+        ctx.fill();
     }
 }
 
@@ -385,4 +504,100 @@ function initHolidayGreeting() {
     }
     
     console.log('节日祝福语初始化完成！当前祝福语：', greeting, '是否显示灯笼：', showLanterns);
+    
+    // 初始化响应式布局
+    initResponsiveLayout();
+}
+
+// 初始化响应式布局
+function initResponsiveLayout() {
+    console.log('正在初始化响应式布局...');
+    
+    // 监听窗口大小变化
+    window.addEventListener('resize', updateResponsiveLayout);
+    
+    // 初始更新
+    updateResponsiveLayout();
+    
+    console.log('响应式布局初始化完成！');
+    
+    // 初始化IP信息
+    initIPInfo();
+}
+
+// 初始化IP信息
+function initIPInfo() {
+    console.log('正在获取IP信息...');
+    
+    const ipInfoElement = document.getElementById('ip-info');
+    
+    fetch('https://update.cz88.net/api/cz88/ip/base?ip')
+        .then(response => response.json())
+        .then(data => {
+            console.log('IP信息API返回数据:', data);
+            
+            if (data.success && data.data) {
+                const ipData = data.data;
+                
+                // 显示IP信息
+                ipInfoElement.innerHTML = `
+                    <div class="ip-data">
+                        <div class="ip-item">
+                            <span class="ip-label">IP:</span>
+                            <span class="ip-value">${ipData.ip}</span>
+                        </div>
+                        <div class="ip-item">
+                            <span class="ip-label">地区:</span>
+                            <span class="ip-value">${ipData.districts}</span>
+                        </div>
+                        <div class="ip-item">
+                            <span class="ip-label">ISP:</span>
+                            <span class="ip-value">${ipData.isp}</span>
+                        </div>
+                        <div class="ip-item">
+                            <span class="ip-label">网络:</span>
+                            <span class="ip-value">${ipData.netWorkType}</span>
+                        </div>
+                        <div class="ip-item">
+                            <span class="ip-label">纬度:</span>
+                            <span class="ip-value">${ipData.locations[0].latitude}</span>
+                        </div>
+                        <div class="ip-item">
+                            <span class="ip-label">经度:</span>
+                            <span class="ip-value">${ipData.locations[0].longitude}</span>
+                        </div>
+                        <div class="ip-item">
+                            <span class="ip-label">半径:</span>
+                            <span class="ip-value">${ipData.locations[0].radius}m</span>
+                        </div>
+                    </div>
+                `;
+                
+                console.log('IP信息显示成功！');
+            } else {
+                ipInfoElement.innerHTML = '<div class="ip-loading">获取IP信息失败</div>';
+                console.error('获取IP信息失败:', data.message);
+            }
+        })
+        .catch(error => {
+            ipInfoElement.innerHTML = '<div class="ip-loading">获取IP信息失败</div>';
+            console.error('获取IP信息异常:', error);
+        });
+}
+
+// 更新响应式布局
+function updateResponsiveLayout() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    
+    console.log('窗口大小变化：', width, 'x', height);
+    
+    // 根据屏幕宽度调整布局
+    if (width <= 768) {
+        console.log('切换到手机端布局');
+        // 手机端布局已经在CSS中定义
+    } else {
+        console.log('切换到桌面端布局');
+        // 桌面端布局已经在CSS中定义
+    }
 }

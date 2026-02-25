@@ -125,6 +125,49 @@ body::-webkit-scrollbar {
     flex-direction: column;
     padding: 20px;
     box-sizing: border-box;
+    position: relative;
+}
+
+/* IP信息显示区域 */
+.ip-info {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 10px 15px;
+    font-size: 0.8em;
+    color: #333;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 10;
+    max-width: 200px;
+}
+
+.ip-info .ip-loading {
+    color: #7f8c8d;
+}
+
+.ip-info .ip-data {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.ip-info .ip-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.ip-info .ip-label {
+    color: #7f8c8d;
+    font-weight: 500;
+}
+
+.ip-info .ip-value {
+    color: #333;
+    font-weight: 600;
 }
 
 /* 主内容区域 */
@@ -487,7 +530,6 @@ body::-webkit-scrollbar {
 /* 响应式设计 */
 @media (max-width: 768px) {
     .loading-content {
-        /* padding: 30px; */
         margin: 20px;
     }
     
@@ -499,6 +541,24 @@ body::-webkit-scrollbar {
         padding: 10px;
     }
     
+    .card {
+        width: 95%;
+        height: 90vh;
+        margin: 5vh auto;
+        padding: 15px;
+    }
+    
+    /* IP信息显示区域 - 手机端 */
+    .ip-info {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        margin-bottom: 0;
+        max-width: 150px;
+        font-size: 0.7em;
+        padding: 8px 10px;
+    }
+    
     .main-container {
         flex-direction: column;
     }
@@ -506,45 +566,77 @@ body::-webkit-scrollbar {
     .module-nav {
         width: 100%;
         border-right: none;
-        border-bottom: 1px solid #eee;
-        padding: 0;
+        border-bottom: 1px solid rgba(238, 238, 238, 0.5);
+        padding: 10px 0;
+        max-height: 60px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
     }
     
     .module-btn {
         display: inline-block;
         width: auto;
+        padding: 10px 15px;
+        margin: 0 5px;
+        white-space: nowrap;
+    }
+    
+    .module-indicator {
+        display: none;
+    }
+    
+    .module-content {
+        padding: 15px;
     }
     
     .module {
         width: 95%;
-        right: 10px;
+        left: 10px;
+    }
+    
+    .module p {
+        font-size: 0.9em;
+        line-height: 1.6;
+    }
+    
+    .bottom-section {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+        gap: 10px;
+    }
+    
+    .daily-quote {
+        min-width: 100%;
+    }
+    
+    .copyright-section {
+        min-width: 100%;
     }
     
     .deng-box,
     .deng-box1,
     .deng-box2,
     .deng-box3 {
-        transform: scale(0.6);
+        transform: scale(0.5);
     }
     
     .deng-box {
-        right: -20px;
-    }
-    
-    .deng-box1 {
         right: -30px;
     }
     
-    .deng-box2 {
-        left: -20px;
+    .deng-box1 {
+        right: -40px;
     }
     
-    .deng-box3 {
+    .deng-box2 {
         left: -30px;
     }
     
-    .bottom-section {
-        flex-direction: column;
-        align-items: stretch;
+    .deng-box3 {
+        left: -40px;
     }
 }
