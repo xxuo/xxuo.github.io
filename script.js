@@ -319,4 +319,70 @@ function initModuleIndicator() {
     }
     
     console.log('模块指示器初始化完成！');
+    
+    // 初始化节日祝福语
+    initHolidayGreeting();
+}
+
+// 初始化节日祝福语
+function initHolidayGreeting() {
+    console.log('正在初始化节日祝福语...');
+    
+    const today = new Date();
+    const month = today.getMonth() + 1; // 月份从0开始，所以+1
+    const day = today.getDate();
+    
+    // 定义节日祝福语
+    let greeting = "";
+    let showLanterns = false;
+    
+    // 根据日期设置不同的祝福语和是否显示灯笼
+    if (month === 1 && day === 1) {
+        // 元旦
+        greeting = "元旦快乐";
+        showLanterns = true;
+    } else if (month === 1 && day >= 20 && day <= 31) {
+        // 春节期间（假设在1月20日到1月31日之间）
+        greeting = "春节快乐";
+        showLanterns = true;
+    } else if (month === 2 && day <= 15) {
+        // 春节期间（假设在2月1日到2月15日之间）
+        greeting = "春节快乐";
+        showLanterns = true;
+    } else if (month === 5 && day === 1) {
+        // 劳动节
+        greeting = "劳动快乐";
+        showLanterns = true;
+    } else if (month === 10 && day === 1) {
+        // 国庆节
+        greeting = "国庆快乐";
+        showLanterns = true;
+    } else if (month === 12 && day === 25) {
+        // 圣诞节
+        greeting = "圣诞快乐";
+        showLanterns = true;
+    }
+    
+    // 控制灯笼的显示和隐藏
+    const lanternContainers = document.querySelectorAll('.deng-box, .deng-box1, .deng-box2, .deng-box3');
+    lanternContainers.forEach(container => {
+        if (showLanterns) {
+            container.style.display = 'block';
+        } else {
+            container.style.display = 'none';
+        }
+    });
+    
+    // 显示祝福语到灯笼
+    if (showLanterns && greeting) {
+        const lanterns = ['lantern-1', 'lantern-2', 'lantern-3', 'lantern-4'];
+        for (let i = 0; i < greeting.length && i < lanterns.length; i++) {
+            const lantern = document.getElementById(lanterns[i]);
+            if (lantern) {
+                lantern.textContent = greeting[i];
+            }
+        }
+    }
+    
+    console.log('节日祝福语初始化完成！当前祝福语：', greeting, '是否显示灯笼：', showLanterns);
 }

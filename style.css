@@ -327,6 +327,25 @@ body::-webkit-scrollbar {
     pointer-events: none;
 }
 
+/* 响应式设计中的灯笼位置 */
+@media (max-width: 768px) {
+    .deng-box {
+        right: -20px;
+    }
+    
+    .deng-box1 {
+        right: -30px;
+    }
+    
+    .deng-box2 {
+        left: -20px;
+    }
+    
+    .deng-box3 {
+        left: -30px;
+    }
+}
+
 .deng-box1 .deng,
 .deng-box3 .deng {
     position: relative;
