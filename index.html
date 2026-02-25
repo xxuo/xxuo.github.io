@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人主页</title>
     <link rel="stylesheet" href="style.css">
+    <!-- 看板娘所需的Font Awesome图标 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+    <!-- 看板娘所需的jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+    <!-- 看板娘脚本 -->
+    <script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
 </head>
 <body>
     <!-- 加载页面（只显示每日一言） -->
@@ -87,6 +93,7 @@
             <div class="main-container">
                 <!-- 左侧模块导航 -->
                 <div class="module-nav">
+                    <div class="module-indicator"></div>
                     <button class="module-btn active" data-module="about">关于我</button>
                     <button class="module-btn" data-module="tech">技术栈</button>
                     <button class="module-btn" data-module="hobby">兴趣爱好</button>

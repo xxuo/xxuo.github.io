@@ -247,4 +247,76 @@ function initModules() {
     });
     
     console.log('模块内容初始化完成！');
+    
+    // 初始化模块指示器
+    initModuleIndicator();
+}
+
+// 初始化模块指示器
+function initModuleIndicator() {
+    console.log('正在初始化模块指示器...');
+    
+    const indicator = document.querySelector('.module-indicator');
+    const buttons = document.querySelectorAll('.module-btn');
+    
+    if (!indicator || !buttons.length) {
+        console.warn('模块指示器或按钮不存在');
+        return;
+    }
+    
+    // 更新指示器位置的函数
+    function updateIndicatorPosition(element) {
+        const rect = element.getBoundingClientRect();
+        const navRect = element.parentElement.getBoundingClientRect();
+        const top = rect.top - navRect.top + element.parentElement.scrollTop;
+        
+        indicator.style.top = `${top}px`;
+        indicator.style.height = `${rect.height}px`;
+    }
+    
+    // 为每个按钮添加事件
+    buttons.forEach(button => {
+        // 鼠标悬停事件
+        button.addEventListener('mouseenter', () => {
+            // 移除所有按钮的active和hover类
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.remove('hover');
+            });
+            // 添加当前按钮的hover效果
+            button.classList.add('hover');
+            // 更新指示器位置
+            updateIndicatorPosition(button);
+        });
+        
+        // 点击事件
+        button.addEventListener('click', () => {
+            // 移除所有按钮的active和hover类
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.remove('hover');
+            });
+            // 添加当前按钮的active类
+            button.classList.add('active');
+            // 更新指示器位置
+            updateIndicatorPosition(button);
+        });
+    });
+    
+    // 为模块导航添加鼠标离开事件
+    const nav = document.querySelector('.module-nav');
+    if (nav) {
+        nav.addEventListener('mouseleave', () => {
+            // 不移除hover类，保持最后一个悬停的按钮的状态
+            // 这样鼠标离开后，最后停留的按钮仍然保持背景颜色
+        });
+    }
+    
+    // 初始化默认位置
+    const activeButton = document.querySelector('.module-btn.active');
+    if (activeButton) {
+        updateIndicatorPosition(activeButton);
+    }
+    
+    console.log('模块指示器初始化完成！');
 }
