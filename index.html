@@ -6,15 +6,8 @@
     <title>沉默的少年</title>
     <link rel="icon" href="沉默的少年头像.png" type="image/png">
     <link rel="stylesheet" href="style.css">
-    <!-- 看板娘所需的Font Awesome图标 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
-    <!-- 看板娘所需的jQuery -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
-    <!-- 看板娘脚本 -->
-    <script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
 </head>
 <body>
-    <!-- 加载页面（只显示每日一言） -->
     <div id="loading-screen">
         <div class="loading-content">
             <div class="quote-content" id="loading-quote">正在加载...</div>
@@ -22,15 +15,10 @@
         </div>
     </div>
     
-    <!-- 主页面 -->
     <div id="main-page" style="display: none;">
-        <!-- 粒子特效容器 -->
         <div id="particle-container"></div>
-        
-        <!-- 背景壁纸 -->
         <img src="https://www.dmoe.cc/random.php" alt="随机动漫" id="background-wallpaper">
         
-        <!-- 灯笼 -->
         <div class="deng-box3">
             <div class="deng">
                 <div class="xian"></div>
@@ -88,40 +76,102 @@
             </div>
         </div>
         
-        <!-- 单个卡片容器（包含所有内容） -->
-        <div class="card">
-            <!-- IP信息显示区域 -->
-            <div class="ip-info" id="ip-info">
-                <div class="ip-loading">正在获取IP信息...</div>
-            </div>
-            
-            <!-- 主内容区域 -->
-            <div class="main-container">
-                <!-- 左侧模块导航 -->
-                <div class="module-nav">
-                    <div class="module-indicator"></div>
-                    <button class="module-btn active" data-module="about">关于我</button>
-                    <button class="module-btn" data-module="tech">技术栈</button>
-                    <button class="module-btn" data-module="hobby">兴趣爱好</button>
+        <div class="main-wrapper">
+            <div class="card">
+                <div class="ip-info-container">
+                    <div class="ip-info" id="ip-info">
+                        <div class="ip-loading">正在获取IP信息...</div>
+                    </div>
                 </div>
                 
-                <!-- 右侧模块内容 -->
-                <div class="module-content" id="module-content">
-                    <!-- 模块将通过JavaScript动态添加 -->
-                </div>
-            </div>
-            
-            <!-- 底部区域（每日一言 + 版权信息） -->
-            <div class="bottom-section">
-                <!-- 每日一言 -->
-                <div class="daily-quote">
-                    <div class="quote-content" id="quote-content">正在加载...</div>
-                    <div class="quote-author" id="quote-author"></div>
+                <div class="card-body">
+                    <nav class="module-nav">
+                        <div class="module-indicator"></div>
+                        <button class="module-btn active" data-module="about">
+                            <span class="btn-icon">👤</span>
+                            <span class="btn-text">关于我</span>
+                        </button>
+                        <button class="module-btn" data-module="tech">
+                            <span class="btn-icon">💻</span>
+                            <span class="btn-text">技术栈</span>
+                        </button>
+                        <button class="module-btn" data-module="hobby">
+                            <span class="btn-icon">🎮</span>
+                            <span class="btn-text">兴趣爱好</span>
+                        </button>
+                    </nav>
+                    
+                    <main class="module-content" id="module-content">
+                    </main>
                 </div>
                 
-                <!-- 版权信息 -->
-                <div class="copyright-section">
-                    <div class="copyright">© 2026 个人主页 | Trae AI | 版权所有者：Trae AI</div>
+                <footer class="card-footer">
+                    <div class="daily-quote">
+                        <div class="quote-content" id="quote-content">正在加载...</div>
+                        <div class="quote-author" id="quote-author"></div>
+                    </div>
+                    <div class="copyright-section">
+                        <div class="copyright">© 2026 个人主页 | 版权所有者：沉默的少年</div>
+                    </div>
+                </footer>
+                
+                <div class="kanban-musume" id="kanban-musume">
+                    <div class="musume-avatar">
+                        <div class="musume-body">
+                            <div class="musume-head">
+                                <div class="musume-hair-back"></div>
+                                <div class="musume-hair-front"></div>
+                                <div class="musume-hair-bangs"></div>
+                                <div class="musume-face">
+                                    <div class="musume-eyebrows">
+                                        <div class="eyebrow left"></div>
+                                        <div class="eyebrow right"></div>
+                                    </div>
+                                    <div class="musume-eyes">
+                                        <div class="eye left">
+                                            <div class="pupil"></div>
+                                            <div class="highlight"></div>
+                                        </div>
+                                        <div class="eye right">
+                                            <div class="pupil"></div>
+                                            <div class="highlight"></div>
+                                        </div>
+                                    </div>
+                                    <div class="musume-nose"></div>
+                                    <div class="musume-mouth"></div>
+                                    <div class="musume-blush">
+                                        <div class="blush left"></div>
+                                        <div class="blush right"></div>
+                                    </div>
+                                </div>
+                                <div class="musume-ears">
+                                    <div class="ear left"></div>
+                                    <div class="ear right"></div>
+                                </div>
+                                <div class="musume-accessory">
+                                    <div class="accessory-inner"></div>
+                                </div>
+                            </div>
+                            <div class="musume-torso">
+                                <div class="musume-collar"></div>
+                                <div class="musume-sleeve-left"></div>
+                                <div class="musume-sleeve-right"></div>
+                                <div class="musume-skirt">
+                                    <div class="skirt-fold-1"></div>
+                                    <div class="skirt-fold-2"></div>
+                                    <div class="skirt-fold-3"></div>
+                                </div>
+                            </div>
+                            <div class="musume-arms">
+                                <div class="arm left"></div>
+                                <div class="arm right"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="musume-dialog" id="musume-dialog">
+                        <div class="musume-text" id="musume-text">欢迎来到我的主页！</div>
+                        <div class="musume-close" id="musume-close">×</div>
+                    </div>
                 </div>
             </div>
         </div>

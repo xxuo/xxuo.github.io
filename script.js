@@ -283,9 +283,6 @@ window.addEventListener('DOMContentLoaded', () => {
             refreshBackground();
             
             // 第四步：设置定时任务
-            // 每30秒刷新一次背景图片
-            setInterval(refreshBackground, 30000);
-            
             // 每60秒刷新一次每日一言
             setInterval(() => {
                 loadDailyQuote('quote-content', 'quote-author');
@@ -406,6 +403,19 @@ function initModuleIndicator() {
             button.classList.add('hover');
             // 更新指示器位置
             updateIndicatorPosition(button);
+            
+            // 触发模块切换
+            const moduleId = button.getAttribute('data-module');
+            // 更新模块显示
+            const modulesElements = document.querySelectorAll('.module');
+            modulesElements.forEach(moduleElement => {
+                moduleElement.classList.remove('active');
+            });
+            
+            const activeModule = document.getElementById(`module-${moduleId}`);
+            if (activeModule) {
+                activeModule.classList.add('active');
+            }
         });
         
         // 点击事件
@@ -420,6 +430,41 @@ function initModuleIndicator() {
             // 更新指示器位置
             updateIndicatorPosition(button);
         });
+    });
+    
+    // 添加滑动事件
+    let startX = 0;
+    let endX = 0;
+    
+    document.querySelector('.module-nav').addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+    });
+    
+    document.querySelector('.module-nav').addEventListener('touchmove', (e) => {
+        endX = e.touches[0].clientX;
+    });
+    
+    document.querySelector('.module-nav').addEventListener('touchend', () => {
+        const diff = startX - endX;
+        if (Math.abs(diff) > 50) {
+            // 滑动距离超过50px才触发切换
+            const activeButton = document.querySelector('.module-btn.active');
+            if (activeButton) {
+                const index = Array.from(buttons).indexOf(activeButton);
+                let newIndex;
+                
+                if (diff > 0) {
+                    // 向左滑动，切换到下一个
+                    newIndex = (index + 1) % buttons.length;
+                } else {
+                    // 向右滑动，切换到上一个
+                    newIndex = (index - 1 + buttons.length) % buttons.length;
+                }
+                
+                // 触发点击事件
+                buttons[newIndex].click();
+            }
+        }
     });
     
     // 为模块导航添加鼠标离开事件
@@ -548,41 +593,147 @@ function initIPInfo() {
                         </div>
                         <div class="ip-item">
                             <span class="ip-label">地区:</span>
-                            <span class="ip-value">${ipData.districts}</span>
+                            <span class="ip-value">${ipData.districts || '未知'}</span>
                         </div>
                         <div class="ip-item">
                             <span class="ip-label">ISP:</span>
-                            <span class="ip-value">${ipData.isp}</span>
+                            <span class="ip-value">${ipData.isp || '未知'}</span>
                         </div>
                         <div class="ip-item">
                             <span class="ip-label">网络:</span>
-                            <span class="ip-value">${ipData.netWorkType}</span>
+                            <span class="ip-value">${ipData.netWorkType || '未知'}</span>
                         </div>
                         <div class="ip-item">
                             <span class="ip-label">纬度:</span>
-                            <span class="ip-value">${ipData.locations[0].latitude}</span>
+                            <span class="ip-value">${ipData.locations && ipData.locations[0] ? ipData.locations[0].latitude : '未知'}</span>
                         </div>
                         <div class="ip-item">
                             <span class="ip-label">经度:</span>
-                            <span class="ip-value">${ipData.locations[0].longitude}</span>
+                            <span class="ip-value">${ipData.locations && ipData.locations[0] ? ipData.locations[0].longitude : '未知'}</span>
                         </div>
                         <div class="ip-item">
                             <span class="ip-label">半径:</span>
-                            <span class="ip-value">${ipData.locations[0].radius}m</span>
+                            <span class="ip-value">${ipData.locations && ipData.locations[0] ? ipData.locations[0].radius + 'm' : '未知'}</span>
                         </div>
                     </div>
                 `;
-                
-                console.log('IP信息显示成功！');
             } else {
-                ipInfoElement.innerHTML = '<div class="ip-loading">获取IP信息失败</div>';
-                console.error('获取IP信息失败:', data.message);
+                ipInfoElement.innerHTML = '<div class="ip-loading">无法获取IP信息</div>';
             }
         })
         .catch(error => {
+            console.error('获取IP信息失败:', error);
             ipInfoElement.innerHTML = '<div class="ip-loading">获取IP信息失败</div>';
-            console.error('获取IP信息异常:', error);
         });
+    
+    console.log('IP信息初始化完成！');
+    
+    // 初始化看板娘
+    initKanbanMusume();
+}
+
+// 初始化看板娘
+function initKanbanMusume() {
+    console.log('正在初始化看板娘...');
+    
+    const kanbanMusume = document.getElementById('kanban-musume');
+    const musumeDialog = document.getElementById('musume-dialog');
+    const musumeText = document.getElementById('musume-text');
+    const musumeClose = document.getElementById('musume-close');
+    
+    if (!kanbanMusume || !musumeDialog || !musumeText || !musumeClose) {
+        console.warn('看板娘元素不存在');
+        return;
+    }
+    
+    // 看板娘的对话内容
+    const musumeMessages = [
+        '欢迎来到我的主页！',
+        '今天天气真不错呢~',
+        '有什么我可以帮助你的吗？',
+        '记得多喝水哦！',
+        '加油！你可以的！',
+        '休息一下，看看风景吧~',
+        '代码写累了吗？',
+        '保持好心情最重要！',
+        '每天进步一点点~',
+        '相信自己，你是最棒的！',
+        '遇到困难不要放弃！',
+        '学习新知识很有趣吧？',
+        '记得按时吃饭哦！',
+        '保持好奇心，探索世界！',
+        '今天也要元气满满！'
+    ];
+    
+    // 显示对话框
+    function showDialog(message) {
+        musumeText.textContent = message;
+        musumeDialog.classList.add('show');
+    }
+    
+    // 隐藏对话框
+    function hideDialog() {
+        musumeDialog.classList.remove('show');
+    }
+    
+    // 随机显示一条消息
+    function showRandomMessage() {
+        const randomIndex = Math.floor(Math.random() * musumeMessages.length);
+        showDialog(musumeMessages[randomIndex]);
+    }
+    
+    // 点击看板娘显示随机消息
+    kanbanMusume.addEventListener('click', (e) => {
+        if (e.target !== musumeClose) {
+            showRandomMessage();
+        }
+    });
+    
+    // 点击关闭按钮隐藏对话框
+    musumeClose.addEventListener('click', (e) => {
+        e.stopPropagation();
+        hideDialog();
+    });
+    
+    // 鼠标悬停效果
+    kanbanMusume.addEventListener('mouseenter', () => {
+        // 悬停时显示欢迎消息（如果对话框未显示）
+        if (!musumeDialog.classList.contains('show')) {
+            showDialog('嗨！点击我可以聊天哦~');
+        }
+    });
+    
+    // 鼠标离开后3秒自动隐藏对话框
+    kanbanMusume.addEventListener('mouseleave', () => {
+        setTimeout(() => {
+            if (musumeDialog.classList.contains('show') && musumeText.textContent === '嗨！点击我可以聊天哦~') {
+                hideDialog();
+            }
+        }, 3000);
+    });
+    
+    // 定时自动显示消息（每60秒）
+    setInterval(() => {
+        // 只有当对话框未显示时才自动显示
+        if (!musumeDialog.classList.contains('show')) {
+            showRandomMessage();
+            // 5秒后自动隐藏
+            setTimeout(() => {
+                hideDialog();
+            }, 5000);
+        }
+    }, 60000);
+    
+    // 页面加载完成后3秒显示欢迎消息
+    setTimeout(() => {
+        showDialog('欢迎来到我的主页！');
+        // 5秒后自动隐藏
+        setTimeout(() => {
+            hideDialog();
+        }, 5000);
+    }, 3000);
+    
+    console.log('看板娘初始化完成！');
 }
 
 // 更新响应式布局
